@@ -1,6 +1,6 @@
 {
   "name": "benchmarkjs-pretty",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tiny wrapper around benchmarkjs with a simpler api",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -22,13 +22,13 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
+    "@types/benchmark": "^1.0.30",
+    "@types/chalk": "^0.4.31",
     "benchmark": "^2.1.4",
     "chalk": "^2.0.1"
   },
   "devDependencies": {
-    "@types/benchmark": "^1.0.30",
     "@types/chai": "^4.0.0",
-    "@types/chalk": "^0.4.31",
     "@types/mocha": "^2.2.41",
     "chai": "^4.0.2",
     "husky": "^0.13.4",
