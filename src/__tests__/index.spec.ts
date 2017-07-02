@@ -1,8 +1,12 @@
 import { assert as t } from "chai";
+import Benchmark from "../index";
 
-describe("foo", () => {
-  it("should return foo", () => {
-    const foo = () => "foo";
-    t.equal(foo(), "foo");
+const noop = () => {
+  /* noop */
+};
+
+describe("Benchmark", () => {
+  it("should return Promise", () => {
+    return new Benchmark().add("foo", noop).add("bar", noop).run();
   });
 });
