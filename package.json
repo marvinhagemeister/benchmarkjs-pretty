@@ -1,6 +1,6 @@
 {
   "name": "benchmarkjs-pretty",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Tiny wrapper around benchmarkjs with a simpler api",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
