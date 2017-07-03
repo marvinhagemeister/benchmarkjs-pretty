@@ -9,4 +9,17 @@ describe("Benchmark", () => {
   it("should return Promise", () => {
     return new Benchmark().add("foo", noop).add("bar", noop).run();
   });
+
+  it("should catch error", async () => {
+    try {
+      await new Benchmark()
+        .add("foo", () => {
+          throw new Error("foo");
+        })
+        .run();
+      t.fail();
+    } catch (err) {
+      /* noop */
+    }
+  });
 });

@@ -26,11 +26,17 @@ export function SimpleLogger(log = console.log): Logger {
 }
 
 export default class Benchmark {
+  private hasErrored: boolean = false;
+
   constructor(
     private logger: Logger = SimpleLogger(),
     private suite: Suite = new Suite(),
   ) {
     this.suite.on("cycle", (event: any) => {
+      if (this.hasErrored) {
+        return;
+      }
+
       const bench = event.target;
       this.logger.cycle(
         bench.name,
@@ -47,12 +53,19 @@ export default class Benchmark {
   }
 
   run(): Promise<void> {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       const self = this;
       this.suite.on("complete", function(this: any) {
+        if (self.hasErrored) {
+          return;
+        }
         const winner = this.filter("fastest").map("name");
         self.logger.complete(winner);
         resolve();
+      });
+      this.suite.on("error", (event: any) => {
+        self.hasErrored = true;
+        reject(event.target.error);
       });
       this.suite.run({ async: true });
     });
