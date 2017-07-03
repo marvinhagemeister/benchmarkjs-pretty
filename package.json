@@ -1,6 +1,6 @@
 {
   "name": "benchmarkjs-pretty",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Tiny wrapper around benchmarkjs with a simpler api",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -50,10 +50,7 @@
     ]
   },
   "nyc": {
-    "include": [
-      "src/*.ts",
-      "src/**/*.ts"
-    ],
+    "include": ["src/*.ts", "src/**/*.ts"],
     "exclude": [
       "typings",
       "node_modules/",
@@ -61,19 +58,9 @@
       "__tests__/**",
       "**/*.d.ts"
     ],
-    "extension": [
-      ".ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ],
-    "reporter": [
-      "json",
-      "html",
-      "text",
-      "text-summary",
-      "lcovonly"
-    ],
+    "extension": [".ts"],
+    "require": ["ts-node/register"],
+    "reporter": ["json", "html", "text", "text-summary", "lcovonly"],
     "all": true
   }
 }
