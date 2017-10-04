@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.0
+
+- Properly format `ops/sec`
+- Breaking change: Allow suites to set a title:
+
+```js
+new Benchmark("My Benchmark")
+  .add("foo", () => {})
+  .run();
+```
+
 ## 1.0.2
 
 - Fix errors in benchmarks getting swallowed
