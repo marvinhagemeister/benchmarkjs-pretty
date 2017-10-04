@@ -15,10 +15,11 @@
     "lint": "tslint 'src/**/*.ts' 'src/**/*.tsx'",
     "watch": "tsc -w",
     "build": "npm run cleanup && tsc",
-    "test": "mocha --compilers ts:ts-node/register --timeout=15000 'src/**/__tests__/*.spec.ts'",
+    "test":
+      "mocha --compilers ts:ts-node/register --timeout=15000 'src/**/__tests__/*.spec.ts'",
     "test-watch": "npm t -- -w -R min",
     "coverage": "nyc npm t",
-    "prepublish": "npm run lint && npm t && npm run build",
+    "prepublishOnly": "npm run lint && npm t && npm run build",
     "precommit": "lint-staged"
   },
   "dependencies": {
