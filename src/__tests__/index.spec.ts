@@ -6,8 +6,11 @@ const noop = () => {
 };
 
 describe("Benchmark", () => {
-  it("should return Promise", () => {
-    return new Benchmark().add("foo", noop).add("bar", noop).run();
+  it("should return Promise", async () => {
+    await new Benchmark("My Benchmark")
+      .add("foo", noop)
+      .add("bar", noop)
+      .run();
   });
 
   it("should catch error", async () => {

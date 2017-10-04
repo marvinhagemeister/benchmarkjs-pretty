@@ -2,17 +2,27 @@ import * as chalk from "chalk";
 import { Suite } from "benchmark";
 
 export interface Logger {
+  start(name: string): void;
   complete(fastest: string): void;
   cycle(name: string, ops: number, delta: number, runs: number): void;
 }
 
 export function SimpleLogger(log = console.log): Logger {
   return {
+    start(name: string) {
+      log(chalk.underline(name + ":"));
+    },
     complete(fastest: string) {
       log(`\nFastest is ${chalk.green(fastest)}\n`);
     },
     cycle(name: string, ops: number, delta: number, runs: number) {
-      const opsDisplay = chalk.yellow(new Intl.NumberFormat().format(ops));
+      const opsDisplay = chalk.yellow(
+        new Intl.NumberFormat("en", {
+          maximumFractionDigits: 3,
+          useGrouping: true,
+        }).format(ops),
+      );
+
       const deltaDisplay = delta.toFixed(2);
       const gray = chalk.gray;
 
@@ -29,9 +39,16 @@ export default class Benchmark {
   private hasErrored: boolean = false;
 
   constructor(
+    public name: string = "",
     private logger: Logger = SimpleLogger(),
     private suite: Suite = new Suite(),
   ) {
+    if (this.name !== "") {
+      this.suite.on("start", () => {
+        this.logger.start(this.name);
+      });
+    }
+
     this.suite.on("cycle", (event: any) => {
       if (this.hasErrored) {
         return;
@@ -54,6 +71,7 @@ export default class Benchmark {
 
   run(): Promise<void> {
     return new Promise((resolve, reject) => {
+      // tslint:disable-next-line no-this-assignment
       const self = this;
       this.suite.on("complete", function(this: any) {
         if (self.hasErrored) {
