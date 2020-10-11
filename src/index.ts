@@ -1,4 +1,4 @@
-import * as chalk from "chalk";
+import * as kolor from "kolorist";
 import { Suite } from "benchmark";
 
 export interface Logger {
@@ -10,13 +10,13 @@ export interface Logger {
 export function SimpleLogger(log = console.log): Logger {
   return {
     start(name: string) {
-      log(chalk.underline(name + ":"));
+      log(kolor.underline(name + ":"));
     },
     complete(fastest: string) {
-      log(`\nFastest is ${chalk.green(fastest)}\n`);
+      log(`\nFastest is ${kolor.green(fastest)}\n`);
     },
     cycle(name: string, ops: number, delta: number, runs: number) {
-      const opsDisplay = chalk.yellow(
+      const opsDisplay = kolor.yellow(
         new Intl.NumberFormat("en", {
           maximumFractionDigits: 3,
           useGrouping: true,
@@ -24,12 +24,11 @@ export function SimpleLogger(log = console.log): Logger {
       );
 
       const deltaDisplay = delta.toFixed(2);
-      const gray = chalk.gray;
 
       log(
-        `${name} ${gray("x")} ${opsDisplay} ${gray(
+        `${name} ${kolor.dim("x")} ${opsDisplay} ${kolor.dim(
           "ops/sec",
-        )} ±${deltaDisplay} ${gray("(" + runs + " runs sampled)")}`,
+        )} ±${deltaDisplay} ${kolor.dim("(" + runs + " runs sampled)")}`,
       );
     },
   };
@@ -73,7 +72,7 @@ export default class Benchmark {
     return new Promise((resolve, reject) => {
       // tslint:disable-next-line no-this-assignment
       const self = this;
-      this.suite.on("complete", function(this: any) {
+      this.suite.on("complete", function (this: any) {
         if (self.hasErrored) {
           return;
         }
